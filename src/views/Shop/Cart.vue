@@ -1,21 +1,27 @@
 <template>
 <!-- 蒙层特效 -->
-<div class="mask" v-if="showCart"></div>
+<!-- 点击蒙层关闭购物车页面并取消蒙层特效-->
+<div class="mask"
+v-if="showCart && calculattions.total > 0"                 
+@click="handleCartShowchange"></div>                        
 <!-- 底部购物车组件 -->
     <div class="cart">
-        <div class="product" v-if="showCart">
+        <div class="product" v-if="showCart && calculattions.total > 0">
             <div class="product__header">
                 <div class="product__header__all" @click="() => setCartItemsChecked(shopId)">
                     <span 
                     class="product__header__icon iconfont"
-                    v-html="allChecked ? '&#xe652;' : '&#xe667;' "
+                    v-html="calculattions.allChecked ? '&#xe652;' : '&#xe667;' "
                     ></span>
                     全选
                 </div>
                 <div 
                 class="product__header__clear"
-                @click="() => cleanCartProducts(shopId)"
-                >清空购物车
+                >
+                    <span 
+                    class="product__header__clear__btn"
+                    @click="() => cleanCartProducts(shopId)"
+                    >清空购物车</span>
                 </div>
             </div>
             <div class="product__item"
@@ -54,17 +60,19 @@
                 class="check__icon__img"
                 @click="handleCartShowchange">
                 <div class="check__icon__tag">
-                    {{ total }}             <!-- 加入购物车的商品数量 -->
+                    {{ calculattions.total }}                                     <!-- 加入购物车的商品数量 -->
                     </div>   
             </div>
             <div class="check__total">
                 <span>总计:&nbsp;</span>
                 <span class="check__total__price">
-                    &yen; {{ price }}       <!-- 加入购物车的商品数量总金额 -->
+                    &yen; {{ calculattions.price }}                               <!-- 加入购物车的商品数量总金额 -->
                     </span>
             </div>
             <div class="check__settlement">
-                去结算
+                <router-link :to="{ name: 'Home'}">                               <!-- 切换路由到订单页 -->
+                    去结算
+                </router-link>
             </div>
         </div>
     </div>
@@ -83,51 +91,31 @@ const useCartEffect = () => {
     const route = useRoute()
     const shopId = route.params.id
     const cartList = store.state.cartList
-    // 计算加入购物车的商品数量
-    const total = computed(() => {
-        const productList = cartList[shopId]
-        let count = 0
+    
+    const calculattions = computed(() => {
+        const productList = cartList[shopId]?.productList
+        const result = { total: 0, price: 0, allChecked: true }
         if(productList){
             for(let i in productList){
                 const product = productList[i]
+                // 计算加入购物车的商品数量
+                result.total += product.count
                 if(product.check){
-                    count += product.count
+                    // 计算加入购物车商品总金额
+                    result.price += ( product.count * product.price )
                 }
-            }
-        }
-        return count
-    })
-    // 计算加入购物车的商品数量总金额
-    const price = computed(() => {
-        const productList = cartList[shopId]
-        let count = 0
-        if(productList){
-            for(let i in productList){
-                const product = productList[i]
-                if(product.check){
-                    count += ( product.count * product.price )
-                }
-            }
-        }
-        // 加入购物车的商品数量总金额保留两位小数
-        return count.toFixed(2)
-    })
-    // 底部全选按钮状态逻辑
-    const allChecked = computed(() => {
-        const productList = cartList[shopId]
-        let result = true
-        if(productList){
-            for(let i in productList){
-                const product = productList[i]
                 if(product.count>0 && !product.check){
-                    result = false
+                    // 全选按钮图标逻辑
+                    result.allChecked = false
                 }
             }
         }
+        // 加入购物车商品总金额保留两位小数
+        result.price = result.price.toFixed(2)
         return result
     })
     const productList = computed(() => {
-        const productList = cartList[shopId] || []
+        const productList = cartList[shopId]?.productList || []
         return productList
     })
     // 购物车商品选中按键逻辑
@@ -142,23 +130,28 @@ const useCartEffect = () => {
     const setCartItemsChecked = ( shopId ) => {
         store.commit('setCartItemsChecked', { shopId })
     }
-    return { total, price, productList, shopId, cleanCartProducts,
-        changeCartItemChecked, changeCartItemInfo, allChecked, setCartItemsChecked
+    return { productList, shopId, cleanCartProducts, calculattions,
+        changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
     }
+}
+// 展示隐藏购物车相关逻辑
+const toggleCartEffect = () => {
+    const showCart = ref(false)
+    // 购物车入口按钮逻辑
+    const handleCartShowchange = () => {
+        showCart.value = !showCart.value
+    }
+    return { showCart, handleCartShowchange }
 }
 export default {
     name :'Cart',
     setup() {
-        const showCart = ref(false)
-        // 购物车按钮逻辑
-        const handleCartShowchange = () => {
-            showCart.value = !showCart.value
-        }
-        const { total, price, productList, shopId, cleanCartProducts,
-            changeCartItemChecked, changeCartItemInfo, allChecked, setCartItemsChecked
+        const { calculattions, productList, shopId, cleanCartProducts,
+            changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
         } = useCartEffect();
-      return { total, price, productList, shopId, cleanCartProducts, handleCartShowchange,
-            changeCartItemChecked, changeCartItemInfo, allChecked, setCartItemsChecked, showCart
+        const { showCart, handleCartShowchange } = toggleCartEffect()
+      return { calculattions, productList, shopId, cleanCartProducts, handleCartShowchange,
+            changeCartItemChecked, changeCartItemInfo, setCartItemsChecked, showCart
         } 
     },
 }
@@ -204,6 +197,9 @@ export default {
             flex: 1;
             margin-right: .18rem;
             text-align: right;
+            &__btn{
+                display: inline-block;
+            }
         }
         &__all{
             margin-left: .18rem;
@@ -327,6 +323,10 @@ export default {
         font-size: .14rem;
         text-align: center;
         color: $bgColor;
+        a{
+            color: $bgColor;
+            text-decoration: none;
+        }
     }
 }
 

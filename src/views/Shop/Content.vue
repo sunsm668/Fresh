@@ -24,11 +24,11 @@
                 </div>
                 <div class="product__number">
                     <span class="product__number__minus"
-                    @click="() => { changeCartItemInfo(shopId, item._id, item, -1)}"
+                    @click="() => { changeCartItem(shopId, item._id, item, -1, shopName)}"
                     >-</span>
-                    {{ cartList?.[shopId]?.[item._id]?.count || 0}}
+                    {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0}}
                     <span class="product__number__plus"
-                    @click="() => { changeCartItemInfo(shopId, item._id, item, 1)}"
+                    @click="() => { changeCartItem(shopId, item._id, item, 1, shopName)}"
                     >+</span>
                 </div>
             </div>
@@ -38,6 +38,7 @@
 
 <script>
 import { reactive, ref, toRefs, watchEffect } from 'vue'
+import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { get } from '../../utils/request';
 import { useCommonCartEffect } from './commonCartEffect'
@@ -70,16 +71,29 @@ const useCurrentListEffect = (currentTab, shopId) => {
     const { list } = toRefs( content )
     return { list}
 }
-
+// 购物车相关逻辑
+const useCartEffect = () => {
+    const store = useStore()
+    const { cartList, changeCartItemInfo } =  useCommonCartEffect()
+    const  updateShopName = (shopId, shopName) => {
+        store.commit('updateShopName', { shopId, shopName })
+    }
+    const changeCartItem = (shopId, productId, item, num, shopName) => {
+        changeCartItemInfo(shopId, productId, item, num)
+        updateShopName(shopId, shopName)
+    }
+    return { cartList, changeCartItem }
+}
 export default {
     name: 'Content',
+    props: ['shopName'],
     setup() {
         const route = useRoute()
         const shopId = route.params.id
         const { handleTabClick, currentTab } = useTabEffect()
         const { list } = useCurrentListEffect(currentTab, shopId)
-        const { cartList, changeCartItemInfo } =  useCommonCartEffect()
-        return { list, cartList, currentTab, categories, handleTabClick, shopId, changeCartItemInfo }
+        const { cartList, changeCartItem } = useCartEffect()
+        return { list, cartList, currentTab, categories, handleTabClick, shopId, changeCartItem }
     },
 }
 </script>
@@ -94,6 +108,7 @@ export default {
     right: 0;
     top: 1.5rem;
     bottom: .5rem;
+    background-color: red;
 }
 .category{
     overflow-y: scroll;
