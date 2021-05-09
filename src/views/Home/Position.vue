@@ -1,4 +1,5 @@
 <template>
+<!-- 位置信息组件 -->
     <div class="position">
         <span class="iconfont position__icon">&#xe611;</span>
         北京理工大学国防科技园2号楼10层

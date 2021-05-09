@@ -1,12 +1,18 @@
 <template>
 <!-- 首页 -->
     <div class="wrapper">
+        <!-- 位置信息组件 -->
         <Position />
+        <!-- 搜索组件 -->
         <Search />
+        <!-- 轮播图组件 -->
         <Banner />
+        <!-- 导航列表组件 -->
         <List />
+        <!-- 附件店铺组件 -->
         <Nearby />
     </div>
+    <!-- 底部Tab栏 -->
     <Docker />
 </template>
 

@@ -1,4 +1,5 @@
 <template>
+<!-- 导航列表组件 -->
     <div class="icons">
         <div class="icons__item"
         v-for="item in List"

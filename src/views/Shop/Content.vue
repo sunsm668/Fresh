@@ -1,4 +1,5 @@
 <template>
+<!-- 商品列表组件 -->
     <div class="content">
         <div class="category">
             <div 
@@ -108,7 +109,6 @@ export default {
     right: 0;
     top: 1.5rem;
     bottom: .5rem;
-    background-color: red;
 }
 .category{
     overflow-y: scroll;

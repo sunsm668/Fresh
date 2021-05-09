@@ -1,5 +1,5 @@
 <template>
-<!-- 购物车页面 -->
+<!-- 附近店铺页面 -->
     <div class="wrapper">
         <div class="search">
             <div class="search__back iconfont" @click="handleBackclick">&#xe677;</div>
@@ -8,12 +8,15 @@
                 <input class="search__content__input" placeholder="请输入商品名称搜索"/>
             </div>
         </div>
+        <!-- 顶部店铺信息 -->
         <ShopInfo 
         :item= "data.item"
         :hideborder= "true"
         v-show="data.item.imgUrl"
         />
+        <!-- 右侧商品列表 -->
         <Content :shopName= "data.item.name"/>
+        <!-- 底部购物车组件 -->
         <Cart />
     </div>
 </template>

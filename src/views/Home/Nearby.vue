@@ -1,4 +1,5 @@
 <template>
+<!-- 附件店铺组件 -->
     <div class="nearby">
       <h3 class="nearby__title">附近店铺</h3>
       <router-link  

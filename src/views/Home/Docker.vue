@@ -1,4 +1,5 @@
 <template>
+<!-- 底部Tab栏 -->
     <div class="docker">
       <div 
       :class="{'docker__item': true, 'docker__item--active': index === 0}"

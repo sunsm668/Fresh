@@ -1,4 +1,5 @@
 <template>
+<!-- 轮播图组件 -->
    <div class="banner">
         <img
           class="banner__img"
