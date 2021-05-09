@@ -70,7 +70,7 @@ v-if="showCart && calculattions.total > 0"
                     </span>
             </div>
             <div class="check__settlement">
-                <router-link :to="{ name: 'Home'}">                               <!-- 切换路由到订单页 -->
+                <router-link :to="{ path: `/orderConfirmation/${shopId}`}">                               <!-- 切换路由到订单页 -->
                     去结算
                 </router-link>
             </div>

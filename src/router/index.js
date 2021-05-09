@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
   {
+    // 首页
     path: '/',
     name: 'Home',
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home/Home')
@@ -15,6 +16,12 @@ const routes = [
     path: '/shopcart',
     name: 'ShopCart',
     component: () => import(/* webpackChunkName: "ShopCart" */ '../views/ShopCart/ShopCart')
+  },
+  {
+    // 确认订单页
+    path: '/orderConfirmation/:id',
+    name: 'OrderConfirmation',
+    component: () => import(/* webpackChunkName: "OrderConfirmation" */ '../views/OrderConfirmation/OrderConfirmation')
   },
   {
     path: '/shop/:id',

@@ -1,4 +1,5 @@
 <template>
+    <!-- 弹窗组件 -->
     <div class="toast">{{ message }}</div>
 </template>
 

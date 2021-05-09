@@ -2,6 +2,7 @@
 <!-- 附近店铺页面 -->
     <div class="wrapper">
         <div class="search">
+            <!-- 返回按钮 -->
             <div class="search__back iconfont" @click="handleBackclick">&#xe677;</div>
             <div class="search__content">
                 <div class="search__content__icon iconfont">&#xe633;</div>
