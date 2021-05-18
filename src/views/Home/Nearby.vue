@@ -2,13 +2,16 @@
 <!-- 附件店铺组件 -->
     <div class="nearby">
       <h3 class="nearby__title">附近店铺</h3>
-      <router-link  
-      v-for="item in nearbyList"
-      :key="item._id"
-      :to="`/shop/${item._id}`"     
+      <template
+       v-for="item in nearbyList"
+        :key="item._id"
       >
-        <ShopInfo :item= "item"/>
-      </router-link>
+        <router-link  
+        :to="`/shop/${item._id}`"     
+        >
+          <ShopInfo :item= "item"/>
+        </router-link>
+      </template>
     </div>
 </template>
 
@@ -20,6 +23,7 @@ import  ShopInfo  from '../../components/ShopInfo'
 const getNearbyListEffect = () => {
   const nearbyList = ref([]);
   const getNearbyList = async () => {
+    // 获取附近店铺信息
     const result = await get('/api/shop/hot-list')
     if(result?.errno === 0 && result?.data?.length){
       nearbyList.value = result.data;

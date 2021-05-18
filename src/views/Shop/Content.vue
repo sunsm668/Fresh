@@ -12,7 +12,7 @@
         </div>
         <div class="product">
             <div class="product__item"
-            v-for="item, in list"
+            v-for="item in list"
             :key="item._id">
                 <img :src="item.imgUrl" alt="" class="product__item__img">
                 <div class="product__item__datail">
@@ -27,6 +27,7 @@
                     <span class="product__number__minus"
                     @click="() => { changeCartItem(shopId, item._id, item, -1, shopName)}"
                     >-</span>
+                    <!-- 商品选中数量 -->
                     {{ cartList?.[shopId]?.productList?.[item._id]?.count || 0}}
                     <span class="product__number__plus"
                     @click="() => { changeCartItem(shopId, item._id, item, 1, shopName)}"
@@ -42,7 +43,7 @@ import { reactive, ref, toRefs, watchEffect } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { get } from '../../utils/request';
-import { useCommonCartEffect } from './commonCartEffect'
+import { useCommonCartEffect } from '../../effects/cartEffects'
 
 const categories = [
         { name:'全部商品', tab :'all'},
@@ -61,8 +62,9 @@ const useTabEffect = () => {
 const useCurrentListEffect = (currentTab, shopId) => {
     const content = reactive({ list: [] })
     const getContextData = async(  ) => {
-    const result = await get(`/api/shop/${shopId}/products`,{
-        tab :currentTab.value
+        // 获取商品信息
+        const result = await get(`/api/shop/${shopId}/products`,{
+            tab: currentTab.value
         })
         if(result?.errno === 0 && result?.data?.length){
             content.list = result.data;
@@ -70,7 +72,7 @@ const useCurrentListEffect = (currentTab, shopId) => {
     }
     watchEffect(() => { getContextData()})
     const { list } = toRefs( content )
-    return { list}
+    return { list }
 }
 // 购物车相关逻辑
 const useCartEffect = () => {
@@ -85,6 +87,7 @@ const useCartEffect = () => {
     }
     return { cartList, changeCartItem }
 }
+
 export default {
     name: 'Content',
     props: ['shopName'],
@@ -151,7 +154,7 @@ export default {
         }
         &__sales{
             margin: .06rem 0;
-            font-size: 12px;
+            font-size: .12rem;
             color: $content-fontcolor;
             line-height: .16rem;
         }

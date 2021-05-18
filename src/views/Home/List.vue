@@ -2,11 +2,11 @@
 <!-- 导航列表组件 -->
     <div class="icons">
         <div class="icons__item"
-        v-for="item in List"
+        v-for="item in iconsList"
         :key="item.desc">
           <img
             class="icons__item__img"
-            :src="item.imgURL"
+            :src="`http://www.dell-lee.com/imgs/vue3/${item.imgName}.png`"
           />
           <p class="icons__item__desc">{{ item.desc }}</p>
         </div>
@@ -18,49 +18,19 @@
 export default {
  name : 'List',
  setup() {
-   const List = [
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/超市.png',
-       desc :'超市便利'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/菜市场.png',
-       desc :'菜市场'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/水果店.png',
-       desc :'水果店'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/鲜花.png',
-       desc :'鲜花绿植'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/医药健康.png',
-       desc :'医药健康'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/家居.png',
-       desc :'家居时尚'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/蛋糕.png',
-       desc :'烘培蛋糕'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/超市.png',
-       desc :'超市便利'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/超市.png',
-       desc :'超市便利'
-     },
-     {
-       imgURL :'http://www.dell-lee.com/imgs/vue3/超市.png',
-       desc :'超市便利'
-     },
-   ]
-   return { List }
+    const iconsList = [
+      { imgName: "超市", desc: "超市便利"},
+      { imgName: "菜市场", desc: "菜市场"},
+      { imgName: "水果店", desc: "水果店"},
+      { imgName: "鲜花", desc: "鲜花绿植"},
+      { imgName: "医药健康", desc: "医药健康"},
+      { imgName: "家居", desc: "家居时尚"},
+      { imgName: "蛋糕", desc: "烘培蛋糕"},
+      { imgName: "签到", desc: "签到"},
+      { imgName: "大牌免运", desc: "大牌免运"},
+      { imgName: "红包", desc: "红包套餐"},
+    ]
+    return { iconsList }
  }
 }
 </script>

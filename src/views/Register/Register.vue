@@ -44,8 +44,8 @@ const useRegisterEffect = (  showToast ) => {
     })
 
     const handleRegister = async () => {
-
     try{
+        // 存入用户名，用户密码
         const result = await post('/api/user/register',{
             username: data.username,
             password: data.password
@@ -101,7 +101,7 @@ export default {
         padding: 0 .16rem;
         margin: 0 .4rem .16rem .4rem;
         background: #F9F9F9;
-        border: 1px solid rgba(0,0,0,0.10);
+        border: .01rem solid rgba(0,0,0,0.10);
         border-radius: .06rem;
         &__content{
             width: 100%;

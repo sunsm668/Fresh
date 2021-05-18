@@ -2,16 +2,16 @@
 <!-- 蒙层特效 -->
 <!-- 点击蒙层关闭购物车页面并取消蒙层特效-->
 <div class="mask"
-v-if="showCart && calculattions.total > 0"                 
+v-if="showCart && calculations.total > 0"                 
 @click="handleCartShowchange"></div>                        
 <!-- 底部购物车组件 -->
     <div class="cart">
-        <div class="product" v-if="showCart && calculattions.total > 0">
+        <div class="product" v-if="showCart && calculations.total > 0">
             <div class="product__header">
                 <div class="product__header__all" @click="() => setCartItemsChecked(shopId)">
                     <span 
                     class="product__header__icon iconfont"
-                    v-html="calculattions.allChecked ? '&#xe652;' : '&#xe667;' "
+                    v-html="calculations.allChecked ? '&#xe652;' : '&#xe667;' "
                     ></span>
                     全选
                 </div>
@@ -25,7 +25,7 @@ v-if="showCart && calculattions.total > 0"
                 </div>
             </div>
             <div class="product__item"
-            v-for="item, in productList"
+            v-for="item in productList"
             :key="item._id">
             <!-- 购物车商品选中按键 -->
             <div class="product__item__checked iconfont"
@@ -60,18 +60,18 @@ v-if="showCart && calculattions.total > 0"
                 class="check__icon__img"
                 @click="handleCartShowchange">
                 <div class="check__icon__tag">
-                    {{ calculattions.total }}                                     <!-- 加入购物车的商品数量 -->
+                    {{ calculations.total }}                                     <!-- 加入购物车的商品数量 -->
                     </div>   
             </div>
             <div class="check__total">
                 <span>总计:&nbsp;</span>
                 <span class="check__total__price">
-                    &yen; {{ calculattions.price }}                               <!-- 加入购物车的商品数量总金额 -->
+                    &yen; {{ calculations.price }}                               <!-- 加入购物车的商品数量总金额 -->
                     </span>
             </div>
-            <div class="check__settlement">
-                <router-link :to="{ path: `/orderConfirmation/${shopId}`}">                               <!-- 切换路由到订单页 -->
-                    去结算
+            <div class="check__settlement" v-show="calculations.total > 0">
+                <router-link :to="{path: `/orderconfirmation/${shopId}`}">
+                去结算
                 </router-link>
             </div>
         </div>
@@ -79,80 +79,57 @@ v-if="showCart && calculattions.total > 0"
 </template>
 
 <script>
-import { computed, ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
-import { useCommonCartEffect } from './commonCartEffect'
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
+import { useCommonCartEffect } from '../../effects/cartEffects';
 
 // 获取购物车信息相关逻辑
 const useCartEffect = () => {
-    const { changeCartItemInfo } = useCommonCartEffect()
-    const store = useStore()
-    const route = useRoute()
-    const shopId = route.params.id
-    const cartList = store.state.cartList
-    
-    const calculattions = computed(() => {
-        const productList = cartList[shopId]?.productList
-        const result = { total: 0, price: 0, allChecked: true }
-        if(productList){
-            for(let i in productList){
-                const product = productList[i]
-                // 计算加入购物车的商品数量
-                result.total += product.count
-                if(product.check){
-                    // 计算加入购物车商品总金额
-                    result.price += ( product.count * product.price )
-                }
-                if(product.count>0 && !product.check){
-                    // 全选按钮图标逻辑
-                    result.allChecked = false
-                }
-            }
-        }
-        // 加入购物车商品总金额保留两位小数
-        result.price = result.price.toFixed(2)
-        return result
-    })
-    const productList = computed(() => {
-        const productList = cartList[shopId]?.productList || []
-        return productList
-    })
+    const store = useStore();
+    const route = useRoute();
+    const shopId = route.params.id;
+
+    const { 
+        calculations, changeCartItemInfo, productList 
+        } = useCommonCartEffect(shopId);
+
+    console.log(calculations,'444')
     // 购物车商品选中按键逻辑
     const changeCartItemChecked = ( shopId,  productId) => {
-        store.commit('changeCartItemChecked', { shopId, productId })
-    }
+        store.commit('changeCartItemChecked', { shopId, productId });
+    };
     // 清除购物车逻辑
     const cleanCartProducts = ( shopId ) => {
-        store.commit('cleanCartProducts', { shopId })
-    }
+        store.commit('cleanCartProducts', { shopId });
+    };
     // 全选按钮逻辑
     const setCartItemsChecked = ( shopId ) => {
-        store.commit('setCartItemsChecked', { shopId })
-    }
-    return { productList, shopId, cleanCartProducts, calculattions,
+        store.commit('setCartItemsChecked', { shopId });
+    };
+    return { productList, shopId, cleanCartProducts, calculations,
         changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
-    }
-}
+    };
+};
 // 展示隐藏购物车相关逻辑
 const toggleCartEffect = () => {
-    const showCart = ref(false)
+    const showCart = ref(false);
     // 购物车入口按钮逻辑
     const handleCartShowchange = () => {
-        showCart.value = !showCart.value
-    }
-    return { showCart, handleCartShowchange }
+        showCart.value = !showCart.value;
+    };
+    return { showCart, handleCartShowchange };
 }
 export default {
     name :'Cart',
     setup() {
-        const { calculattions, productList, shopId, cleanCartProducts,
+        const { calculations, productList, shopId, cleanCartProducts,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
         } = useCartEffect();
-        const { showCart, handleCartShowchange } = toggleCartEffect()
-      return { calculattions, productList, shopId, cleanCartProducts, handleCartShowchange,
+        const { showCart, handleCartShowchange } = toggleCartEffect();
+      return { calculations, productList, shopId, cleanCartProducts, handleCartShowchange,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked, showCart
-        } 
+        };
     },
 }
 </script>
@@ -181,7 +158,7 @@ export default {
     &__header{
         display: flex;
         height: .52rem;
-        border-bottom: 1px solid $content-bgColor;
+        border-bottom: .01rem solid $content-bgColor;
         &__icon{
             font-size: .2rem;
             margin-right: .16rem;

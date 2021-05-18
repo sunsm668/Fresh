@@ -13,7 +13,7 @@
         <Nearby />
     </div>
     <!-- 底部Tab栏 -->
-    <Docker />
+    <Docker :currentIndex="0"/>
 </template>
 
 <script>
@@ -22,9 +22,10 @@ import Search from './Search'
 import Banner from './Banner'
 import List from './List'
 import Nearby from './Nearby'
-import Docker from './Docker'
+import Docker from '../../components/Docker'
 export default {
     name : 'Home',
+    props:['showIcon'],
     components: { 
         Nearby,
         List,

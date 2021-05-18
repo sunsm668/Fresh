@@ -8,25 +8,33 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home/Home')
   },
   {
-    path: '/cartlist',
-    name: 'CartList',
-    component: () => import(/* webpackChunkName: "CartList" */ '../views/CartList/CartList')
-  },
-  {
+      // 购物车页
     path: '/shopcart',
     name: 'ShopCart',
     component: () => import(/* webpackChunkName: "ShopCart" */ '../views/ShopCart/ShopCart')
   },
   {
+    path: '/shop/:id',
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "Shop" */ '../views/Shop/Shop')
+  },
+  {
     // 确认订单页
-    path: '/orderConfirmation/:id',
+    path: '/orderconfirmation/:id',
     name: 'OrderConfirmation',
     component: () => import(/* webpackChunkName: "OrderConfirmation" */ '../views/OrderConfirmation/OrderConfirmation')
   },
   {
-    path: '/shop/:id',
-    name: 'Shop',
-    component: () => import(/* webpackChunkName: "Shop" */ '../views/Shop/Shop')
+    // 订单页
+    path: '/orderlist',
+    name: 'OrderList',
+    component: () => import(/* webpackChunkName: "OrderList" */ '../views/OrderList/OrderList')
+  },
+  {
+    // 个人中心页
+    path: '/mine',
+    name: 'Mine',
+    component: () => import(/* webpackChunkName: "Mine" */ '../views/Mine/Mine')
   },
   {
     path: '/register',

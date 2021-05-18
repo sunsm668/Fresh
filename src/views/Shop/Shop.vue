@@ -35,6 +35,7 @@ const useShopInfoEffect = () => {
     const route = useRoute();
     const data = reactive({ item: {} });
     const getItemData = async () => {
+        // 获取顶部商铺信息
         const result = await get(`/api/shop/${route.params.id}`)
         if(result?.errno === 0 && result?.data){
             data.item = result.data;
@@ -69,11 +70,11 @@ export default {
 }
 .search{
     display: flex;
-    margin: .14rem 0 .04rem 0;
+    margin: .2rem 0 .04rem 0;
     &__back{
         line-height: .32rem;
         font-size: .2rem;
-        padding: .03rem .16rem 0 0;
+        padding: .02rem .16rem 0 0;
         color: #B6B6B6;
     }
     &__content{
