@@ -126,6 +126,7 @@ export default {
         const { calculations, productList, shopId, cleanCartProducts,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
         } = useCartEffect();
+        console.log(calculations,222)
         const { showCart, handleCartShowchange } = toggleCartEffect();
       return { calculations, productList, shopId, cleanCartProducts, handleCartShowchange,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked, showCart

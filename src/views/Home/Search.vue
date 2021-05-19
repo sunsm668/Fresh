@@ -1,7 +1,7 @@
 <template>
 <!-- 搜索组件 -->
     <div class="search">
-        <span class="iconfont">&#xe62d;</span>
+        <span class="iconfont">&#xe633;</span>
         <span class="search__text">山姆会员商店优惠商品</span>
     </div>   
 </template>
