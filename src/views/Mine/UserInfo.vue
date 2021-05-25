@@ -1,5 +1,5 @@
 <template>
-    <div class="mask"></div>
+    <div class="background"></div>
         <div class="userInfo">
             <img src="//img4.sycdn.imooc.com/601cf2f3000151f409660966-140-140.jpg" alt="头像" class="userInfo__avatar">
             <h2 class="userInfo__name">热心市民李先生</h2>
@@ -31,7 +31,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.mask{
+.background{
     position: relative;
     width: 4.75rem;
     height: 3rem;

@@ -94,7 +94,6 @@ const useCartEffect = () => {
         calculations, changeCartItemInfo, productList 
         } = useCommonCartEffect(shopId);
 
-    console.log(calculations,'444')
     // 购物车商品选中按键逻辑
     const changeCartItemChecked = ( shopId,  productId) => {
         store.commit('changeCartItemChecked', { shopId, productId });
@@ -126,7 +125,6 @@ export default {
         const { calculations, productList, shopId, cleanCartProducts,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked
         } = useCartEffect();
-        console.log(calculations,222)
         const { showCart, handleCartShowchange } = toggleCartEffect();
       return { calculations, productList, shopId, cleanCartProducts, handleCartShowchange,
             changeCartItemChecked, changeCartItemInfo, setCartItemsChecked, showCart

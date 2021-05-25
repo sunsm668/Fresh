@@ -8,12 +8,13 @@ const routes = [
     component: () => import(/* webpackChunkName: "Home" */ '../views/Home/Home')
   },
   {
-      // 购物车页
+    // 购物车页
     path: '/shopcart',
     name: 'ShopCart',
     component: () => import(/* webpackChunkName: "ShopCart" */ '../views/ShopCart/ShopCart')
   },
   {
+    //附近店铺页
     path: '/shop/:id',
     name: 'Shop',
     component: () => import(/* webpackChunkName: "Shop" */ '../views/Shop/Shop')
@@ -37,6 +38,25 @@ const routes = [
     component: () => import(/* webpackChunkName: "Mine" */ '../views/Mine/Mine')
   },
   {
+    // 我的地址
+    path: '/address',
+    name: 'Address',
+    component: () => import(/* webpackChunkName: "Address" */ '../views/Address/Address')
+  },
+  {
+    // 新建地址
+    path: '/newaddress',
+    name: 'newAddress',
+    component: () => import(/* webpackChunkName: "newAddress" */ '../views/newAddress/newAddress')
+  },
+  {
+    // 编辑地址
+    path: '/upaddress',
+    name: 'upAddress',
+    component: () => import(/* webpackChunkName: "upAddress" */ '../views/upAddress/upAddress')
+  },
+  {
+    //注册页
     path: '/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "Register" */ '..//views/Register/Register'),
@@ -46,6 +66,7 @@ const routes = [
     }
   },
   {
+    //登陆页
     path: '/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "Login" */ '../views/Login/Login'),

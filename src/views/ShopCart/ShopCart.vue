@@ -3,53 +3,50 @@
     <div class="title">我的全部购物车（2）</div>
     <div class="wrapper">
         <div class="orders">
-            <div class="order">
-                <div class="product">
+            <!-- <div class="order">
+                <div class="product"
+                v-for="(item,index) in productList"
+                :key="index">
                     <div class="product__item">
-                        <img src="" alt="" class="product__item__img">
+                        <img :src="item.imgUrl" alt="" class="product__item__img">
                         <div class="product__item__datail">
-                            <h4 class="product__item__title">111</h4>
-                            <div class="product__item__price"
-                            >
-                                <span class="product__item__yen">&yen;</span>222
-                                <span class="product__item__origin">&yen;33</span>
+                            <h4 class="product__item__title">111{{item.name}}</h4>
+                            <div class="product__item__price">
+                                <span class="product__item__yen">&yen;</span>222{{}}
+                                <span class="product__item__origin">&yen;33{{}}</span>
                             </div>
                         </div>
-                        <!-- <div class="product__item__datail">
-                            <h4 class="product__item__title">{{ item.name }}</h4>
-                            <div class="product__item__price"
-                            v-for="(innerItem, innerIndex) in productList"
-                            :key="innerIndex"
-                            >
-                                <span class="product__item__yen">&yen;</span>{{ innerIndex.price }}
-                                <span class="product__item__origin">&yen;{{ innerIndex.total }}</span>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <Docker :currentIndex="1"/>
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
+// import { useStore } from 'vuex';
+// import { useRoute } from 'vue-router'
 import Docker from '../../components/Docker';
-import { useCommonCartEffect } from '../../effects/cartEffects';
+// import { useCommonCartEffect } from '../../effects/cartEffects';
 
 export default {
     name:'ShopCart',
     components: { Docker },
     setup() {
-        const route = useRoute();
-        const shopId = route.params.id;
-        const { 
-        calculations, changeCartItemInfo, productList 
-        } = useCommonCartEffect(shopId);
-        console.log(productList)
-        console.log(calculations)
-        return { calculations, changeCartItemInfo, productList };
+        // const store = useStore();
+        // // const route = useRoute();
+        // // const shopId = route.params.id;
+        // const shopInfo = store.state.cartList.shopId;
+        // const productList = shopInfo.productList || -1;
+
+        // // const { 
+        // // changeCartItemInfo, productList 
+        // // } = useCommonCartEffect(shopId);
+        // console.log(shopInfo, '-----------shopInfo------------')
+        // console.log(productList, '-----------productList------------')
+        // // return { changeCartItemInfo, productList };
+        // return { shopInfo, productList };
     }
 }
 </script>

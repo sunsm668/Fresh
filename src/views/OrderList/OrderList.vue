@@ -43,7 +43,7 @@ const useOrderListEffect = () => {
     const data = reactive( { list: [] } );
     const getNearbyList = async () => {
         const result = await get('/api/order')
-        // 获取附近店铺信息
+        // 获取订单信息
         if(result?.errno === 0 && result?.data?.length){
             const orderList = result.data;
             orderList.forEach((order) => {
@@ -69,7 +69,6 @@ export default {
     components: { Docker },
     setup() {
         const { list } = useOrderListEffect();
-        console.log(list)
         return { list };
     }
 }

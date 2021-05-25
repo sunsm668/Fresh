@@ -22,12 +22,14 @@ import { useStore } from 'vuex';
 export const useCommonCartEffect = (shopId) => {
     const store = useStore();
     const cartList = store.state.cartList;
+    console.log(cartList,"--cartList")
     const changeCartItemInfo = ( shopId, productId, productInfo, num ) => {
         store.commit('changeCartItemInfo', { shopId, productId, productInfo, num })
     };
     // 获取商品列表
     const productList = computed(() => {
         const productList = cartList[shopId]?.productList || {};
+        console.log(productList,"----productList")
         const notEmptyproductList = {};
         for( let i in productList){
             const product = productList[i]
@@ -39,7 +41,8 @@ export const useCommonCartEffect = (shopId) => {
     });
     // 获取商铺名称
     const shopName = computed(() => {
-        const shopName = cartList[shopId]?.shopName || '';
+        const shopName = cartList[shopId]?.productList.shopName || '';
+        console.log(shopName,"----shopName")
         return shopName;
     });
     const calculations = computed(() => {
@@ -68,6 +71,5 @@ export const useCommonCartEffect = (shopId) => {
         result.price = result.price.toFixed(2);
         return result;
     });
-    console.log(productList,'productList--------')
     return { cartList, productList, calculations, shopName, changeCartItemInfo };
 }

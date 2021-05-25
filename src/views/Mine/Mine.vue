@@ -7,11 +7,13 @@
                 <div class="userService__wallet__desc">我的钱包</div>
                 <div class="userService__wallet__backIcon iconfont">&#xe75e;</div>
             </div>
-            <div class="userService__address">
-                   <div class="userService__address__imgIcon iconfont">&#xe63e;</div>
-                <div class="userService__address__desc">我的地址</div>
-                <div class="userService__address__backIcon iconfont">&#xe75e;</div>
-            </div>
+            <router-link to="address">
+                <div class="userService__address">
+                    <div class="userService__address__imgIcon iconfont">&#xe63e;</div>
+                    <div class="userService__address__desc">我的地址</div>
+                    <div class="userService__address__backIcon iconfont">&#xe75e;</div>
+                </div>
+            </router-link>
             <div class="userService__help">
                 <div class="userService__help__imgIcon iconfont">&#xe635;</div>
                 <div class="userService__help__desc">客服与帮助</div>
@@ -71,6 +73,9 @@ export default {
             text-align: center;
     
         }
+    }
+    a{
+    text-decoration: none;
     }
     &__wallet__imgIcon{
         color: #ED4A47;
