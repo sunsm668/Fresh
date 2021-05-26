@@ -1,43 +1,61 @@
 <template>
-    <div class="top">
-        <h2 class="top__icon iconfont" @click="handleBackClick">&#xe677;</h2>
-        <h2 class="top__title">编辑收货地址</h2>
-        <router-link to="newaddress">
-            <div class="top__new">保存</div>
-        </router-link>
-    </div>
     <div class="wrapper">
-       <div class="newaddressList">
-           <div class="newaddressList__city">所在城市：
-               <input type="text" class="newaddressList__input" placeholder="北京市">
-           </div>
-           <div class="newaddressList__department">小区/大厦/学校：
-               <input type="text" class="newaddressList__input" placeholder="北理工大学国防科技园">
-           </div>
-           <div class="newaddressList__houseNumber">楼号-门牌号：
-               <input type="text" class="newaddressList__input" placeholder="2号楼10层">
-           </div>
-           <div class="newaddressList__name">收货人：
-               <input type="text" class="newaddressList__input" placeholder="小慕">
-           </div>
-           <div class="newaddressList__phone">联系电话：
-               <input type="text" class="newaddressList__input" placeholder="18911023277">
-           </div>
-       </div>
+        <div class="top">
+            <h2 class="top__icon iconfont" @click="handleBackClick">&#xe677;</h2>
+            <h2 class="top__title">编辑收货地址</h2>
+            <router-link to="newaddress">
+                <div class="top__new"></div>
+            </router-link>
+        </div>
+        <form action="/api/user/address/：id" method="patch">
+            <div class="newaddressList">
+                <div class="newaddressList__city">所在城市：
+                    <input type="text" class="newaddressList__input" :value="address">
+                </div>
+                <div class="newaddressList__department">小区/大厦/学校：
+                    <input type="text" class="newaddressList__input" placeholder="北理工大学国防科技园">
+                </div>
+                <div class="newaddressList__houseNumber">楼号-门牌号：
+                    <input type="text" class="newaddressList__input" placeholder="2号楼10层">
+                </div>
+                <div class="newaddressList__name">收货人：
+                    <input type="text" class="newaddressList__input" placeholder="小慕">
+                </div>
+                <div class="newaddressList__phone">联系电话：
+                    <input type="text" class="newaddressList__input" placeholder="18911023277">
+                </div>
+                <input type="submit" class="newaddressList__submit" value="保存">
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router'; 
+import { ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router'; 
+import { get } from '../../utils/request';
 export default {
     name: 'Address',
     setup() {
+        const route = useRoute();
         const router = useRouter();
+        const id =route.params.id;
         const handleBackClick = () => {
             router.back();
         }
+        const address = ref([]);
+        const getaddress = async () => {
+            // 获取地址列表
+            const result = await get(`/api/user/address${id}`);
+            if(result?.errno === 0 && result?.data?.length){
+                address.value = result.data;
+            }
+            console.log(result.data,'1')
+            console.log(111)
+        } 
+        getaddress();
         return {
-            handleBackClick
+            handleBackClick, address
         }
     },
 }
@@ -84,7 +102,7 @@ export default {
   overflow-y: auto;
   position: absolute;
   left: 0;
-  top: .55rem;
+  top: 0;
   bottom: 0;
   right: 0;
   background-color: rgb(248, 248, 248);
@@ -116,22 +134,13 @@ export default {
         border: none;
         outline: none;
     }
-    &__input::-webkit-input-placeholder { /* WebKit browsers */
-        color: #333333;
+    &__submit{
+        position: relative;
+        top: -2.74rem;
+        left: 3.06rem;
+        border: none;
+        background-color: #fff;
     }
-
-    &__input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-        color: #333333;
-    }
-
-    &__input::-moz-placeholder { /* Mozilla Firefox 19+ */
-        color: #333333;
-    }
-
-    &__input:-ms-input-placeholder { /* Internet Explorer 10+ */
-        color: #333333;
-    }
-
 }
 
 </style>

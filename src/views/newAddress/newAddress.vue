@@ -1,29 +1,32 @@
 <template>
-    <div class="top">
-        <h2 class="top__icon iconfont" @click="handleBackClick">&#xe677;</h2>
-        <h2 class="top__title">新建收货地址</h2>
-        <router-link to="newaddress">
-            <div class="top__new">保存</div>
-        </router-link>
-    </div>
     <div class="wrapper">
-       <div class="newaddressList">
-           <div class="newaddressList__city">所在城市：
-               <input type="text" class="newaddressList__input">
-           </div>
-           <div class="newaddressList__department">小区/大厦/学校：
-               <input type="text" class="newaddressList__input">
-           </div>
-           <div class="newaddressList__houseNumber">楼号-门牌号：
-               <input type="text" class="newaddressList__input">
-           </div>
-           <div class="newaddressList__name">收货人：
-               <input type="text" class="newaddressList__input">
-           </div>
-           <div class="newaddressList__phone">联系电话：
-               <input type="text" class="newaddressList__input">
-           </div>
-       </div>
+        <div class="top">
+            <h2 class="top__icon iconfont" @click="handleBackClick">&#xe677;</h2>
+            <h2 class="top__title">新建收货地址</h2>
+            <router-link to="newaddress">
+                <div class="top__new"></div>
+            </router-link>
+        </div>
+        <form action="/api/user/address" method="post">
+            <div class="newaddressList">
+                <div class="newaddressList__city">所在城市：
+                    <input type="text" class="newaddressList__input" placeholder="如北京市">
+                </div>
+                <div class="newaddressList__department">小区/大厦/学校：
+                    <input type="text" class="newaddressList__input" placeholder="如理工大学国防科技园">
+                </div>
+                <div class="newaddressList__houseNumber">楼号-门牌号：
+                    <input type="text" class="newaddressList__input" placeholder="A号楼B层">
+                </div>
+                <div class="newaddressList__name">收货人：
+                    <input type="text" class="newaddressList__input" placeholder="请填写收货人的姓名">
+                </div>
+                <div class="newaddressList__phone">联系电话：
+                    <input type="text" class="newaddressList__input" placeholder="请填写收货手机号">
+                </div>
+                <input type="submit" class="newaddressList__submit" value="保存">
+            </div>
+        </form>
     </div>
 </template>
 
@@ -83,7 +86,7 @@ export default {
   overflow-y: auto;
   position: absolute;
   left: 0;
-  top: .55rem;
+  top: 0;
   bottom: 0;
   right: 0;
   background-color: rgb(248, 248, 248);
@@ -114,6 +117,13 @@ export default {
         padding: 0 .08rem 0 .08rem;
         border: none;
         outline: none;
+    }
+    &__submit{
+        position: relative;
+        top: -2.74rem;
+        left: 3.06rem;
+        border: none;
+        background-color: #fff;
     }
 }
 

@@ -8,36 +8,50 @@
     </div>
     <div class="wrapper">
         <h3 class="address__title">我的收货地址</h3>
-        <div class="address">
-            <div class="address__user">
-                 <router-link to="upaddress">
-                    <div class="address__user__icon iconfont">&#xe75e;</div>
-                 </router-link>
-                <div class="address__userInfo">
-                    <div class="address__userInfo__name">小慕</div>
-                    <div class="address__userInfo__tel">18866669999</div>
+        <div class="addressList"
+        v-for="item in addressList"
+        :key="item._id">
+            <div class="address">
+                <div class="address__user">
+                    <router-link :to="{path:`/address/${item._id}`}">
+                        <div class="address__user__icon iconfont">&#xe75e;</div>
+                    </router-link>
+                    <div class="address__userInfo">
+                        <div class="address__userInfo__name">{{item.name}}</div>
+                        <div class="address__userInfo__tel">{{item.phone}}</div>
+                    </div>
+                    <div class="address__userAddress">
+                        {{item.department}} {{item.houseNumber}}
+                    </div>
                 </div>
-                <div class="address__userAddress">
-                    北京市海淀区西三环北路 2号院 北京理工大学 国防科技园2号楼 10层 
-                </div>
-                <div class=""></div>
             </div>
-
         </div>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useRouter } from 'vue-router'; 
+import { get } from '../../utils/request'
 export default {
     name: 'Address',
     setup() {
         const router = useRouter();
+        // 返回上一页功能
         const handleBackClick = () => {
             router.back();
         }
+        const addressList = ref([]);
+        const getaddressList = async () => {
+            // 获取地址列表
+            const result = await get('/api/user/address')
+            if(result?.errno === 0 && result?.data?.length){
+                addressList.value = result.data;
+            }
+        } 
+        getaddressList();
         return {
-            handleBackClick
+            handleBackClick, addressList
         }
     },
 }
@@ -94,6 +108,7 @@ export default {
     height: 1.04rem;
     background: #FFFFFF;
     border-radius: .04rem;
+    margin-bottom: .16rem;
     &__user{
         position: relative;
         padding: .18rem;

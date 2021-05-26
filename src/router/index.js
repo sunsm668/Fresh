@@ -51,7 +51,7 @@ const routes = [
   },
   {
     // 编辑地址
-    path: '/upaddress',
+    path: '/address/:id',
     name: 'upAddress',
     component: () => import(/* webpackChunkName: "upAddress" */ '../views/upAddress/upAddress')
   },
