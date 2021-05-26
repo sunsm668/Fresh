@@ -7,22 +7,22 @@
                 <div class="top__new"></div>
             </router-link>
         </div>
-        <form action="/api/user/address/：id" method="patch">
+        <form action="/api/user/address/:id" method="patch">
             <div class="newaddressList">
                 <div class="newaddressList__city">所在城市：
-                    <input type="text" class="newaddressList__input" :value="address">
+                    <input type="text" class="newaddressList__input" :value="address.city">
                 </div>
                 <div class="newaddressList__department">小区/大厦/学校：
-                    <input type="text" class="newaddressList__input" placeholder="北理工大学国防科技园">
+                    <input type="text" class="newaddressList__input" :value="address.department">
                 </div>
                 <div class="newaddressList__houseNumber">楼号-门牌号：
-                    <input type="text" class="newaddressList__input" placeholder="2号楼10层">
+                    <input type="text" class="newaddressList__input" :value="address.houseNumber">
                 </div>
                 <div class="newaddressList__name">收货人：
-                    <input type="text" class="newaddressList__input" placeholder="小慕">
+                    <input type="text" class="newaddressList__input" :value="address.name">
                 </div>
                 <div class="newaddressList__phone">联系电话：
-                    <input type="text" class="newaddressList__input" placeholder="18911023277">
+                    <input type="text" class="newaddressList__input" :value="address.phone">
                 </div>
                 <input type="submit" class="newaddressList__submit" value="保存">
             </div>
@@ -33,7 +33,7 @@
 <script>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router'; 
-import { get } from '../../utils/request';
+import { get, patch } from '../../utils/request';
 export default {
     name: 'Address',
     setup() {
@@ -45,17 +45,25 @@ export default {
         }
         const address = ref([]);
         const getaddress = async () => {
-            // 获取地址列表
-            const result = await get(`/api/user/address${id}`);
+            // 获取地址
+            const result = await get(`/api/user/address/${id}`);
             if(result?.errno === 0 && result?.data?.length){
                 address.value = result.data;
             }
-            console.log(result.data,'1')
-            console.log(111)
         } 
         getaddress();
+        
+        const upAddress = ref([]);
+        const UpDataAddress = async () => {
+            // 更新地址
+            const result = await patch(`/api/user/address/${id}`);
+            if(result?.errno === 0 && result?.data?.length){
+               upAddress.value = result.data;
+            }
+        } 
+        UpDataAddress();
         return {
-            handleBackClick, address
+            handleBackClick, UpDataAddress, address, upAddress
         }
     },
 }

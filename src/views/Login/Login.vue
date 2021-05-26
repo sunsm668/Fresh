@@ -26,6 +26,8 @@ const useLoginEffect = (  showToast ) => {
         username:'',
         password:'',
     })
+    console.log(data)
+    console.log(159)
     const handleLogin = async () => {
     try{
         const result = await post('/api/user/login',{
