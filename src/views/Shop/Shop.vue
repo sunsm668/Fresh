@@ -37,7 +37,8 @@ const useShopInfoEffect = () => {
     const getItemData = async () => {
         // 获取顶部商铺信息
         const result = await get(`/api/shop/${route.params.id}`)
-        if(result?.errno === 0 && result?.data){
+        if(result?.error === 0 && result?.data){
+        // if(result?.errno === 0 && result?.data){
             data.item = result.data;
         }
     }

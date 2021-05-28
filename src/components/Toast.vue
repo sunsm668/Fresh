@@ -7,25 +7,25 @@
 import { reactive, toRefs } from 'vue';
 export default {
     name: 'Toast',
-    props: ['message'],
-    setup() {
-       
-    },
+    props: ['message']
 }
 export const useToastEffect = () => {
+    //弹窗内容功能
     const toastData = reactive({
-            show: false,
-            toastMessage:''
+            show: false,                     //默认不显示
+            toastMessage:''                  //显示内容默认为空
         })
+    //弹窗显示功能
     const showToast= ( message ) => {
-        toastData.show = true;
-        toastData.toastMessage =  message;
-        setTimeout(() => {
+        console.log(message)
+        toastData.show = true;               //显示状态至为true
+        toastData.toastMessage = message;    //送入显示内容
+        setTimeout(() => {                   //2秒弹出层消失，并恢复初始状态
             toastData.show = false;
             toastData.toastMessage = '';
         }, 2000);
     }
-    const { show, toastMessage } = toRefs()
+    const { show, toastMessage } = toRefs(toastData)
     return { show, toastMessage, showToast }
 } 
 </script>

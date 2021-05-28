@@ -44,19 +44,20 @@ const useRegisterEffect = (  showToast ) => {
     })
 
     const handleRegister = async () => {
-    try{
-        // 存入用户名，用户密码
-        const result = await post('/api/user/register',{
-            username: data.username,
-            password: data.password
-        })
-        if(result.data.errno === 0){
-            router.push({ name : 'Login'})
-        }else{
-            showToast('注册失败');
-        }
-    } catch (e){
-            showToast('请求失败');
+        try{
+            // 存入用户名，用户密码
+            const result = await post('/api/user/register',{
+                username: data.username,
+                password: data.password
+            })
+            // if(result.data.errno === 0){
+            if(result.data.error === 0){
+                router.push({ name : 'Login'})
+            }else{
+                showToast('注册失败');
+            }
+        }catch(e){
+                showToast('请求失败');
         }
     } 
     const { username,  password, ensurement } = toRefs(data);

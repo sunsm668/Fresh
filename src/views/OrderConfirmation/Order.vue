@@ -23,6 +23,7 @@
             </div>
         </div>
     </div>
+    <Toast v-if="show" :message="toastMessage"/>
 </template>
 
 <script>
@@ -31,56 +32,63 @@ import { useStore } from 'vuex';
 import { useRoute, useRouter } from 'vue-router';
 import { post } from '../../utils/request';
 import { useCommonCartEffect } from '../../effects/cartEffects';
+import Toast, { useToastEffect } from '../../components/Toast';
 
 // 下单相关逻辑
-const useMakeOrderEffect = ( shopId, shopName, productList ) => {
+const useMakeOrderEffect = ( shopId, shopName, productList, showToast ) => {
     const router = useRouter();
     const store = useStore();
+    //订单状态逻辑
     const handleConfirmOrder = async ( isCanceled ) => {
-    const products = [];
-    for( let i in productList.value){
-        const product = productList.value[i];
-        products.push({id: product._id, num: product.count});
-    }
-    try{
-        const result = await post('/api/order',{
-            address: 1,
-            shopId,
-            shopName:shopName.value,
-            isCanceled,
-            products
-        })
-        if(result.data.errno=== 0){
-            store.commit('clearCartData',shopId);
-            router.push({ name : 'OrderList'});
+        const products = [];
+        for( let i in productList.value){
+            const product = productList.value[i];
+            products.push({id: product._id, num: product.count});
         }
-    } catch (e){
-            // showToast('请求失败');
+        try{
+            const result = await post('/api/order',{
+                address: 1,
+                shopId,
+                shopName:shopName.value,
+                isCanceled,
+                products
+            })
+            if(result.data.error=== 0){
+            // if(result.data.errno=== 0){
+                store.commit('clearCartData',shopId);
+                router.push({ name : 'OrderList'});
+            }
+        } catch (e){
             // 提示下单失败
+            showToast('下单失败');
         }
     } 
     return { handleConfirmOrder }
 };
-
+//提交订单弹层逻辑
 const useShowMaskEffect = () =>{
     const showConfirm = ref(false);
-      const handleShowConfirm = () => {
-            showConfirm.value = !showConfirm.value;
-        };
+    const handleShowConfirm = () => {
+        showConfirm.value = !showConfirm.value;
+    };
     return { showConfirm, handleShowConfirm }
 };
 
 export default {
-  name: 'Order',
+    name: 'Order',
+    components: { Toast },
     setup() {
         const route = useRoute();
         const shopId = parseInt(route.params.id, 10) ;
         const { productList, calculations, shopName } = useCommonCartEffect(shopId);
-        const { handleConfirmOrder } = useMakeOrderEffect( shopId, shopName, productList );
+        // console.log(calculations.shopId,'calculations*********')
+        const {  show, toastMessage, showToast  } = useToastEffect();
+        const { handleConfirmOrder } = useMakeOrderEffect( shopId, shopName, productList, showToast );
         const { showConfirm, handleShowConfirm } = useShowMaskEffect();
         return {  
             productList, calculations, shopName, 
-            handleConfirmOrder, handleShowConfirm,showConfirm,  
+            handleConfirmOrder, handleShowConfirm,showConfirm,
+            show, toastMessage, showToast  
         };
     },
 }

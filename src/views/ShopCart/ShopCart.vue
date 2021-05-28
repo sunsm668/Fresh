@@ -3,22 +3,20 @@
     <div class="title">我的全部购物车（2）</div>
     <div class="wrapper">
         <div class="orders">
-            <!-- <div class="order">
-                <div class="product"
-                v-for="(item,index) in productList"
-                :key="index">
+            <div class="order">
+                <div class="product">
                     <div class="product__item">
-                        <img :src="item.imgUrl" alt="" class="product__item__img">
+                        <img src="" alt="" class="product__item__img">
                         <div class="product__item__datail">
-                            <h4 class="product__item__title">111{{item.name}}</h4>
+                            <h4 class="product__item__title">11</h4>
                             <div class="product__item__price">
-                                <span class="product__item__yen">&yen;</span>222{{}}
-                                <span class="product__item__origin">&yen;33{{}}</span>
+                                <div class="product__item__yen">&yen;222{{}}</div>
+                                <div class="product__item__origin">&yen;33{{}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <Docker :currentIndex="1"/>
@@ -26,27 +24,26 @@
 
 <script>
 // import { useStore } from 'vuex';
-// import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import Docker from '../../components/Docker';
-// import { useCommonCartEffect } from '../../effects/cartEffects';
+import { useCommonCartEffect } from '../../effects/cartEffects';
 
 export default {
     name:'ShopCart',
     components: { Docker },
     setup() {
         // const store = useStore();
-        // // const route = useRoute();
-        // // const shopId = route.params.id;
+        const route = useRoute();
+        const shopId = route.params.id;
         // const shopInfo = store.state.cartList.shopId;
         // const productList = shopInfo.productList || -1;
+        // console.log(shopId,'shopId***************************')
 
-        // // const { 
-        // // changeCartItemInfo, productList 
-        // // } = useCommonCartEffect(shopId);
-        // console.log(shopInfo, '-----------shopInfo------------')
-        // console.log(productList, '-----------productList------------')
-        // // return { changeCartItemInfo, productList };
-        // return { shopInfo, productList };
+        const { 
+        changeCartItemInfo, productList 
+        } = useCommonCartEffect(shopId);
+        // return { changeCartItemInfo, productList };
+        return {  changeCartItemInfo, productList };
     }
 }
 </script>
@@ -146,6 +143,7 @@ export default {
             overflow: hidden;
         }
         &__price{
+            display: flex;
             line-height: .2rem;
             margin-top: .06rem;
             font-size: .14rem;

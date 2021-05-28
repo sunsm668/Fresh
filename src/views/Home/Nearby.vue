@@ -25,7 +25,8 @@ const getNearbyListEffect = () => {
   const getNearbyList = async () => {
     // 获取附近店铺信息
     const result = await get('/api/shop/hot-list')
-    if(result?.errno === 0 && result?.data?.length){
+    if(result?.error === 0 && result?.data?.length){
+    // if(result?.errno === 0 && result?.data?.length){
       nearbyList.value = result.data;
     }
   } 

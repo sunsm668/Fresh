@@ -44,7 +44,8 @@ const useOrderListEffect = () => {
     const getNearbyList = async () => {
         const result = await get('/api/order')
         // 获取订单信息
-        if(result?.errno === 0 && result?.data?.length){
+        if(result?.error === 0 && result?.data?.length){
+        // if(result?.errno === 0 && result?.data?.length){
             const orderList = result.data;
             orderList.forEach((order) => {
                 const products = order.products || [];

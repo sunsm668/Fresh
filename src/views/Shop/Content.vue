@@ -66,7 +66,8 @@ const useCurrentListEffect = (currentTab, shopId) => {
         const result = await get(`/api/shop/${shopId}/products`,{
             tab: currentTab.value
         })
-        if(result?.errno === 0 && result?.data?.length){
+        if(result?.error === 0 && result?.data?.length){
+        // if(result?.errno === 0 && result?.data?.length){
             content.list = result.data;
         }
     }

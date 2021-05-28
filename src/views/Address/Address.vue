@@ -21,7 +21,7 @@
                         <div class="address__userInfo__tel">{{item.phone}}</div>
                     </div>
                     <div class="address__userAddress">
-                        {{item.department}} {{item.houseNumber}}
+                        {{item.city}} {{item.department}} {{item.houseNumber}}  
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@ export default {
         const getaddressList = async () => {
             // 获取地址列表
             const result = await get('/api/user/address')
-            if(result?.errno === 0 && result?.data?.length){
+            if(result?.error === 0 && result?.data?.length){
                 addressList.value = result.data;
             }
         } 

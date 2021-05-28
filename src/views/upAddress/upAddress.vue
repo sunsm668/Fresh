@@ -10,16 +10,16 @@
         <form action="/api/user/address/:id" method="patch">
             <div class="newaddressList">
                 <div class="newaddressList__city">所在城市：
-                    <input type="text" class="newaddressList__input" :value="address.city">
+                    <!-- <input type="text" class="newaddressList__input" :value="address.data.city"> -->
                 </div>
                 <div class="newaddressList__department">小区/大厦/学校：
-                    <input type="text" class="newaddressList__input" :value="address.department">
+                    <input type="text" class="newaddressList__input" :value="address.houseNumber">{{address.houseNumber}}
                 </div>
                 <div class="newaddressList__houseNumber">楼号-门牌号：
                     <input type="text" class="newaddressList__input" :value="address.houseNumber">
                 </div>
                 <div class="newaddressList__name">收货人：
-                    <input type="text" class="newaddressList__input" :value="address.name">
+                    <input type="text" class="newaddressList__input" :value="address.houseNumber">
                 </div>
                 <div class="newaddressList__phone">联系电话：
                     <input type="text" class="newaddressList__input" :value="address.phone">
@@ -37,22 +37,24 @@ import { get, patch } from '../../utils/request';
 export default {
     name: 'Address',
     setup() {
-        const route = useRoute();
         const router = useRouter();
+        const route = useRoute();
         const id =route.params.id;
         const handleBackClick = () => {
             router.back();
         }
-        const address = ref([]);
-        const getaddress = async () => {
+         const address = ref([]);
             // 获取地址
+        const getaddress = async () => {
+            
             const result = await get(`/api/user/address/${id}`);
-            if(result?.errno === 0 && result?.data?.length){
+            console.log(result,'result--------------');
+            if(result?.error === 0 && result?.data?.length){
+            // if(result?.errno === 0 && result?.data?.length){
                 address.value = result.data;
             }
         } 
         getaddress();
-        
         const upAddress = ref([]);
         const UpDataAddress = async () => {
             // 更新地址
@@ -65,7 +67,7 @@ export default {
         return {
             handleBackClick, UpDataAddress, address, upAddress
         }
-    },
+    }
 }
 </script>
 

@@ -13,7 +13,9 @@
                 <span class="top__receiver__info__name">瑶妹（先生）</span>
                 <span class="top__receiver__info__tel">18911024266</span>
             </div>
-            <div class="iconfont top__receiver__enter">&#xe677;</div>
+            <router-link to="address">
+                <div class="iconfont top__receiver__enter">&#xe677;</div>
+            </router-link>
         </div>
     </div>
 </template>

@@ -18,23 +18,24 @@
 import { reactive, toRefs } from 'vue';
 import { useRouter } from 'vue-router';
 import { post } from '../../utils/request';
-import Toast , { useToastEffect }from '../../components/Toast.vue';
+import { useToastEffect }from '../../components/Toast.vue';
+import Toast from '../../components/Toast';
 
+//用户登陆逻辑
 const useLoginEffect = (  showToast ) => {
     const router = useRouter();
     const data = reactive({
         username:'',
         password:'',
     })
-    console.log(data)
-    console.log(159)
     const handleLogin = async () => {
     try{
         const result = await post('/api/user/login',{
             username: data.username,
             password: data.password
         })
-        if(result.data.errno=== 0){
+        console.log(result.data,'result.data')
+        if(result.data.error === 0){
             showToast('登陆成功');
             localStorage.isLogin = true;
             router.push({ name : 'Home'})
@@ -48,6 +49,8 @@ const useLoginEffect = (  showToast ) => {
     const { username,  password } = toRefs(data);
     return { username,  password, handleLogin }
 }
+
+//路由跳转逻辑
 const useRegisterEffect = () => {
     const router = useRouter();
     const handleRegisterClick = () => {
