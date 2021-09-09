@@ -3,28 +3,28 @@
         <div class="top">
             <h2 class="top__icon iconfont" @click="handleBackClick">&#xe677;</h2>
             <h2 class="top__title">编辑收货地址</h2>
-            <router-link to="newaddress">
+            <!-- <router-link to="newaddress"> -->
                 <div class="top__new"></div>
-            </router-link>
+            <!-- </router-link> -->
         </div>
-        <form action="/api/user/address/:id" method="patch">
+        <form action="/api/user/address/:id" method="post">
             <div class="newaddressList">
                 <div class="newaddressList__city">所在城市：
-                    <!-- <input type="text" class="newaddressList__input" :value="address.data.city"> -->
+                    <input type="text" class="newaddressList__input" :value="address.city">
                 </div>
                 <div class="newaddressList__department">小区/大厦/学校：
-                    <input type="text" class="newaddressList__input" :value="address.houseNumber">{{address.houseNumber}}
+                    <input type="text" class="newaddressList__input" >
                 </div>
                 <div class="newaddressList__houseNumber">楼号-门牌号：
-                    <input type="text" class="newaddressList__input" :value="address.houseNumber">
+                    <input type="text" class="newaddressList__input" >
                 </div>
                 <div class="newaddressList__name">收货人：
-                    <input type="text" class="newaddressList__input" :value="address.houseNumber">
+                    <input type="text" class="newaddressList__input" >
                 </div>
                 <div class="newaddressList__phone">联系电话：
-                    <input type="text" class="newaddressList__input" :value="address.phone">
+                    <input type="text" class="newaddressList__input" >
                 </div>
-                <input type="submit" class="newaddressList__submit" value="保存">
+                <input type="submit" class="newaddressList__submit" value="保存" @click="UpDataAddress">
             </div>
         </form>
     </div>
@@ -33,7 +33,7 @@
 <script>
 import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router'; 
-import { get, patch } from '../../utils/request';
+import { get, post } from '../../utils/request';
 export default {
     name: 'Address',
     setup() {
@@ -49,23 +49,27 @@ export default {
             
             const result = await get(`/api/user/address/${id}`);
             console.log(result,'result--------------');
-            if(result?.error === 0 && result?.data?.length){
+            if(result?.error === 0 ){
             // if(result?.errno === 0 && result?.data?.length){
                 address.value = result.data;
+                console.log(result.data,'result.data**********')
+                console.log(address,'address------------')
             }
         } 
-        getaddress();
+        // getaddress();
+        
         const upAddress = ref([]);
         const UpDataAddress = async () => {
             // 更新地址
-            const result = await patch(`/api/user/address/${id}`);
+            console.log(id,'敧慴摤敲s')
+            const result = await post(`/api/user/address/${id}`);
             if(result?.errno === 0 && result?.data?.length){
                upAddress.value = result.data;
             }
         } 
         UpDataAddress();
         return {
-            handleBackClick, UpDataAddress, address, upAddress
+            handleBackClick, UpDataAddress, address, upAddress,getaddress
         }
     }
 }

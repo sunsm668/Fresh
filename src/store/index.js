@@ -37,7 +37,9 @@ export default Vuex.createStore({
   mutations: {
     // 商品数量加减功能
     changeCartItemInfo(state, payload){
+        // 获取传入的店铺ID、商品ID、商品信息
         const { shopId, productId, productInfo } = payload;
+        // 根据店铺ID获取店铺信息
         let shopInfo = state.cartList[shopId];
         if(!shopInfo) {  shopInfo = {
           shopname:'', productList:{}
@@ -67,14 +69,18 @@ export default Vuex.createStore({
     },
     // 商品在购物车中状态
     changeCartItemChecked(state, payload){
+        //获取传入的店铺ID、商品ID 
         const { shopId, productId } = payload;
         const product = state.cartList[shopId].productList[productId];
+        // 商品状态取反
         product.check = !product.check;
         setLocalCartList(state);
     },
     // 清空购物车功能
     cleanCartProducts(state, payload){
+        //获取传入的店铺ID 
         const { shopId } = payload;
+        // 将店铺ID下的商品列表清空
         state.cartList[shopId].productList = {};
         setLocalCartList(state);
     },

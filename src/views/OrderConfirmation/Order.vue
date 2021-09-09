@@ -79,9 +79,8 @@ export default {
     components: { Toast },
     setup() {
         const route = useRoute();
-        const shopId = parseInt(route.params.id, 10) ;
+        const shopId = route.params.id;
         const { productList, calculations, shopName } = useCommonCartEffect(shopId);
-        // console.log(calculations.shopId,'calculations*********')
         const {  show, toastMessage, showToast  } = useToastEffect();
         const { handleConfirmOrder } = useMakeOrderEffect( shopId, shopName, productList, showToast );
         const { showConfirm, handleShowConfirm } = useShowMaskEffect();

@@ -2,21 +2,21 @@
     <div class="background"></div>
         <div class="userInfo">
             <img src="//img4.sycdn.imooc.com/601cf2f3000151f409660966-140-140.jpg" alt="头像" class="userInfo__avatar">
-            <h2 class="userInfo__name">热心市民李先生</h2>
-            <p class="userInfo__id">ID: 1069643013</p>
+            <h2 class="userInfo__name">K</h2>
+            <p class="userInfo__id">ID: 1099643012</p>
             <div class="userInfo__delimiter"></div>
             <ol class="userInfo__list">
                 <li class="userInfo__redEnvelopes">红包
-                    <div class="userInfo__redEnvelopes__desc">218</div>
+                    <div class="userInfo__redEnvelopes__desc">168</div>
                 </li>
                 <li class="userInfo__coupon">优惠券
-                    <div class="userInfo__coupon__desc">12张</div> 
+                    <div class="userInfo__coupon__desc">16张</div> 
                 </li>
                 <li class="userInfo__freshBeans">鲜豆
-                    <div class="userInfo__freshBeans__desc">88</div>
+                    <div class="userInfo__freshBeans__desc">106</div>
                 </li>
                 <li class="userInfo__whiteStripe">白条
-                    <div class="userInfo__whiteStripe__desc">1000</div>
+                    <div class="userInfo__whiteStripe__desc">8000</div>
                 </li>
             </ol>
         </div>

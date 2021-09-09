@@ -8,10 +8,10 @@
         </div>
         <div class="top__receiver">
             <div class="top__receiver__title">收货地址</div>
-            <div class="top__receiver__address">北京理工大学国防科技园2号楼10层</div>
+            <div class="top__receiver__address">长春工业大学人文信息学院南校区4号楼西313</div>
             <div class="top__receiver__info">
-                <span class="top__receiver__info__name">瑶妹（先生）</span>
-                <span class="top__receiver__info__tel">18911024266</span>
+                <span class="top__receiver__info__name">孙思邈（先生）</span>
+                <span class="top__receiver__info__tel">159 4444 8704</span>
             </div>
             <router-link to="address">
                 <div class="iconfont top__receiver__enter">&#xe677;</div>
@@ -36,6 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../style/viriables.scss';
+@import '../../style/mixins.scss';
 .top{
     position: relative;
     height: 1.96rem;
@@ -72,6 +73,7 @@ export default {
             font-size: .14rem;
             line-height: .2rem;
             color: #333;
+            @include ellipsis;
         }
         &__info{
             padding: .06rem 0 0 .16rem;

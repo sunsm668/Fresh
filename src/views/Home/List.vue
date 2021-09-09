@@ -2,36 +2,38 @@
 <!-- 导航列表组件 -->
     <div class="icons">
         <div class="icons__item"
-        v-for="item in iconsList"
-        :key="item.desc">
+        v-for="item in list.data"
+        :key="item.id">
           <img
             class="icons__item__img"
-            :src="`http://www.dell-lee.com/imgs/vue3/${item.imgName}.png`"
+            :src="item.imgUrl"
           />
-          <p class="icons__item__desc">{{ item.desc }}</p>
+          <p class="icons__item__desc">{{item.name}}</p>
         </div>
       </div>
       <div class="gap"></div> 
 </template>
 
 <script>
+import { ref } from 'vue'
+import axios from 'axios'
+
 export default {
  name : 'List',
  setup() {
-    const iconsList = [
-      { imgName: "超市", desc: "超市便利"},
-      { imgName: "菜市场", desc: "菜市场"},
-      { imgName: "水果店", desc: "水果店"},
-      { imgName: "鲜花", desc: "鲜花绿植"},
-      { imgName: "医药健康", desc: "医药健康"},
-      { imgName: "家居", desc: "家居时尚"},
-      { imgName: "蛋糕", desc: "烘培蛋糕"},
-      { imgName: "签到", desc: "签到"},
-      { imgName: "大牌免运", desc: "大牌免运"},
-      { imgName: "红包", desc: "红包套餐"},
-    ]
-    return { iconsList }
- }
+  const list = ref([]);
+  axios.get('https://www.fastmock.site/mock/1c368cc0e5be9d69bcb83f64a2c1a09c/jd/api/list', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    list.value = response.data;
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+    return { list };
+  } 
 }
 </script>
 

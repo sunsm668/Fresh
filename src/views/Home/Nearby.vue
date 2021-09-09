@@ -1,7 +1,7 @@
 <template>
 <!-- 附件店铺组件 -->
     <div class="nearby">
-      <h3 class="nearby__title">附近店铺</h3>
+      <h3 class="nearby__title">热门店铺</h3>
       <template
        v-for="item in nearbyList"
         :key="item._id"
@@ -19,14 +19,12 @@
 import { ref } from 'vue'
 import { get } from '../../utils/request'
 import  ShopInfo  from '../../components/ShopInfo'
-
+// 获取附近店铺信息
 const getNearbyListEffect = () => {
   const nearbyList = ref([]);
   const getNearbyList = async () => {
-    // 获取附近店铺信息
     const result = await get('/api/shop/hot-list')
     if(result?.error === 0 && result?.data?.length){
-    // if(result?.errno === 0 && result?.data?.length){
       nearbyList.value = result.data;
     }
   } 

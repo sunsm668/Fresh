@@ -45,7 +45,6 @@ const useOrderListEffect = () => {
         const result = await get('/api/order')
         // 获取订单信息
         if(result?.error === 0 && result?.data?.length){
-        // if(result?.errno === 0 && result?.data?.length){
             const orderList = result.data;
             orderList.forEach((order) => {
                 const products = order.products || [];
@@ -55,10 +54,11 @@ const useOrderListEffect = () => {
                     totalPrice += ((product?.orderSales * product?. product.price) || 0);
                     totalNum += (product?.orderSales || 0);
                 })
-                order.totalPrice = totalPrice;
+                order.totalPrice = totalPrice.toFixed(2);
                 order.totalNum = totalNum;
             })
             data.list = result.data;
+    console.log(data.list)
         }
     } 
     getNearbyList();

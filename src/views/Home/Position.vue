@@ -2,7 +2,7 @@
 <!-- 位置信息组件 -->
     <div class="position">
         <span class="iconfont position__icon">&#xe611;</span>
-        北京理工大学国防科技园2号楼10层
+          长春工业大学人文信息学院南校区4号楼西313
         <span class="iconfont position_notice">&#xe64b;</span>
     </div> 
 </template>

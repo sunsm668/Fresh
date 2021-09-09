@@ -22,18 +22,6 @@ import { useStore } from 'vuex';
 export const useCommonCartEffect = (shopId) => {
     const store = useStore();
     const cartList = store.state.cartList;
-    // //proxy拦截行为
-    // let _handler ={
-    //     get:function( target, _p ){
-    //         return target
-    //     }
-
-    // }
-    // //创建proxy对象
-    // let _proxy = new Proxy ( cartList, _handler)
-    // // let target = cartList;
-    // let p = new Proxy(target, {});
-    // console.log(p.shopId,'p')
     const changeCartItemInfo = ( shopId, productId, productInfo, num ) => {
         store.commit('changeCartItemInfo', { shopId, productId, productInfo, num })
     };
@@ -52,22 +40,15 @@ export const useCommonCartEffect = (shopId) => {
     // 获取商铺名称
     const shopName = computed(() => {
         const shopName = cartList[shopId]?.productList.shopName || '';
-        // console.log(shopName,'shopName')
-        // console.log(p,'p')
-        // console.log(cartList[shopId],'cartList[shopId]')
-        // console.log(cartList[shopId].productList,'cartList[shopId].productList')
         return shopName;
     });
     const calculations = computed(() => {
         const productList = cartList[shopId]?.productList;
-        console.log(productList,'productList88888')
-        console.log(cartList,'cartList')
         const result = { 
-            total: 0,           //商品数量
+            total: 0,           //商品总数量
             price: 0,           //商品总金额
             allChecked: true    //全选按钮切换icon图标
         };
-        console.log(productList)
         if(productList){
             for(let i in productList){
                 const product = productList[i]

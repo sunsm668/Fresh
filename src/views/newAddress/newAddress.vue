@@ -10,19 +10,19 @@
         <form action="/api/user/address" method="post">
             <div class="newaddressList">
                 <div class="newaddressList__city">所在城市：
-                    <input type="text" class="newaddressList__input" placeholder="如北京市">
+                    <input type="text" class="newaddressList__input" v-model="如北京市">
                 </div>
                 <div class="newaddressList__department">小区/大厦/学校：
-                    <input type="text" class="newaddressList__input" placeholder="如理工大学国防科技园">
+                    <input type="text" class="newaddressList__input" v-model="如理工大学国防科技园">
                 </div>
                 <div class="newaddressList__houseNumber">楼号-门牌号：
-                    <input type="text" class="newaddressList__input" placeholder="A号楼B层">
+                    <input type="text" class="newaddressList__input" v-model="A号楼B层">
                 </div>
                 <div class="newaddressList__name">收货人：
-                    <input type="text" class="newaddressList__input" placeholder="请填写收货人的姓名">
+                    <input type="text" class="newaddressList__input" v-model="请填写收货人的姓名">
                 </div>
                 <div class="newaddressList__phone">联系电话：
-                    <input type="text" class="newaddressList__input" placeholder="请填写收货手机号">
+                    <input type="text" class="newaddressList__input" v-model="请填写收货手机号">
                 </div>
                 <input type="submit" class="newaddressList__submit" value="保存">
             </div>
@@ -32,6 +32,37 @@
 
 <script>
 import { useRouter } from 'vue-router'; 
+
+// const useMakeOrderEffect = ( shopId, shopName, productList, showToast ) => {
+//     const router = useRouter();
+//     const store = useStore();
+//     //订单状态逻辑
+//     const handleConfirmOrder = async ( isCanceled ) => {
+//         const products = [];
+//         for( let i in productList.value){
+//             const product = productList.value[i];
+//             products.push({id: product._id, num: product.count});
+//         }
+//         try{
+//             const result = await post('/api/user/address',{
+//                 address: 1,
+//                 shopId,
+//                 shopName:shopName.value,
+//                 isCanceled,
+//                 products
+//             })
+//             if(result.data.error=== 0){
+//                 store.commit('clearCartData',shopId);
+//                 router.push({ name : 'OrderList'});
+//             }
+//         } catch (e){
+//             // 提示创建地址失败
+//             showToast('创建地址失败');
+//         }
+//     } 
+//     return { handleConfirmOrder }
+// };
+
 export default {
     name: 'Address',
     setup() {
@@ -39,6 +70,7 @@ export default {
         const handleBackClick = () => {
             router.back();
         }
+        
         return {
             handleBackClick
         }

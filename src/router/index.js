@@ -89,6 +89,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
+// 用户为登陆只允许访问登录页和注册页
 router.beforeEach((to, from, next) => {
   const { isLogin } = localStorage;
   if(!isLogin && (to.name !== "Login" && to.name !== "Register"))

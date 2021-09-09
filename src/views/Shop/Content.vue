@@ -1,6 +1,7 @@
 <template>
 <!-- 商品列表组件 -->
     <div class="content">
+        <!-- 侧边栏 -->
         <div class="category">
             <div 
             :class="{'category__item': true, 'category__item--active' : currentTab === item.tab }"
@@ -8,7 +9,6 @@
             :key="item.name"
             @click="() =>  handleTabClick( item.tab )"
             >{{ item.name }}</div>
-   
         </div>
         <div class="product">
             <div class="product__item"

@@ -2,20 +2,25 @@
 <!-- 购物车页 -->
     <div class="title">我的全部购物车（2）</div>
     <div class="wrapper">
-        <div class="orders">
-            <div class="order">
-                <div class="product">
+        <div class="shoplist">
+            <div class="shop"
+            v-for="item in nearbyList"
+            :key="item._id">
+                <h2 class="shop__name">{{item.name}}</h2>
+                <!-- <div class="product"
+                v-for="innerItem in productList"
+                :key="innerItem._id">
                     <div class="product__item">
-                        <img src="" alt="" class="product__item__img">
+                        <img :src="innerItem.imgUrl" alt="" class="product__item__img">
                         <div class="product__item__datail">
-                            <h4 class="product__item__title">11</h4>
+                            <h4 class="product__item__title">{{innerItem.name}}</h4>
                             <div class="product__item__price">
-                                <div class="product__item__yen">&yen;222{{}}</div>
-                                <div class="product__item__origin">&yen;33{{}}</div>
+                                <div class="product__item__yen">&yen;{{innerItem.price}} x {{}}</div>
+                                <div class="product__item__origin">&yen;{{innerItem.oldPrice}}</div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -23,27 +28,54 @@
 </template>
 
 <script>
-// import { useStore } from 'vuex';
-import { useRoute } from 'vue-router'
+import { ref } from 'vue';
+import { get } from '../../utils/request';
 import Docker from '../../components/Docker';
 import { useCommonCartEffect } from '../../effects/cartEffects';
 
+
+//获取商店列表
+const getNearbyListEffect = () => {
+  const nearbyList = ref([]);
+  const getNearbyList = async () => {
+    const result = await get('/api/shop/hot-list')
+    if(result?.error === 0 && result?.data?.length){
+      nearbyList.value = result.data;
+    }
+  } 
+  return { nearbyList, getNearbyList }
+}
+
+//根据每个商店的id，获取每个商店的商品信息
+// const getProductListEffect = (id) => {
+//     const productList = ref([]);
+//     const getProductList = async () => {
+//         const result = await get(`/api/shop/${id}/products`)
+//         if(result?.error === 0 && result?.data?.length){
+//             productList.value = result.data;
+//             console.log(productList,'productList')
+//         }
+//   } 
+//   return { productList, getProductList }
+// }
 export default {
     name:'ShopCart',
     components: { Docker },
+    
     setup() {
-        // const store = useStore();
-        const route = useRoute();
-        const shopId = route.params.id;
-        // const shopInfo = store.state.cartList.shopId;
-        // const productList = shopInfo.productList || -1;
-        // console.log(shopId,'shopId***************************')
-
-        const { 
-        changeCartItemInfo, productList 
-        } = useCommonCartEffect(shopId);
-        // return { changeCartItemInfo, productList };
-        return {  changeCartItemInfo, productList };
+        const { nearbyList, getNearbyList } = getNearbyListEffect()
+        console.log(nearbyList,'nearbyList1')
+        console.log(nearbyList._id,'nearbyList2')
+    
+        let id ='60aa2e60eb8ac136acc99777';
+        // const { productList, getProductList } = getProductListEffect(id)
+        const { cartList } = useCommonCartEffect(id);
+        // console.log(calculations, changeCartItemInfo, productList )
+        // console.log(shopId)
+        getNearbyList();
+        console.log(cartList.shopId,'cartList')
+        // getProductList();
+        return { nearbyList, cartList };
     }
 }
 </script>
@@ -68,64 +100,24 @@ export default {
   right: 0;
   background-color: rgb(248, 248, 248);
 }
-
-.order{
-    margin: .16rem .18rem;
+.shop{
+    margin: .16rem;
     padding: .16rem;
-    background-color: $bgColor;
-    border-radius: .04rem;
-    &__title{
-        display: flex;
-    }
-    &__shopName{
-        flex: 1;
+    background: $bgColor;
+    border-radius: 0.06rem;
+    &__name{
         font-size: .16rem;
-        color: $content-fontcolor;
-        margin-bottom: .16rem;
-    }
-    &__status{
-        font-size: .14rem;
-        color: #999999;
-        text-align: right;
-    }
-    &__content{
-        display: flex;
-        &__imgs{
-            display: flex;
-            flex: 1;
-        }
-        &__img{
-            width: .4rem;
-            height: .4rem;
-            margin-right: .12rem;
-        }
-    }
-    &__info{
-        &__price{
-           font-size: .14rem;
-            color: #E93B3B;
-            text-align: right; 
-            line-height: .2rem;
-            margin-bottom: .04rem;
-        }
-        &__count{
-            font-size: .12rem;
-            color: $content-fontcolor;
-            text-align: right;
-            line-height: .14rem;
-        }
+        color: #333333;
     }
 }
 .product{
     flex: 1;
     overflow-y: scroll;
-    background: $bgColor;
+
     &__item{
         position: relative;
         display: flex;
         padding: .12rem 0;
-        margin: 0 .16rem;
-        border-bottom: .01rem solid $content-bgColor;
         &__img{
             height: .46rem;
             width: .46rem;

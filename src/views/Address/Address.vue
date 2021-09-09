@@ -48,6 +48,7 @@ export default {
             if(result?.error === 0 && result?.data?.length){
                 addressList.value = result.data;
             }
+            console.log(result)
         } 
         getaddressList();
         return {
